@@ -1,0 +1,25 @@
+.profile {
+   justify-content: center;
+   display: flex;
+   align-items: center;
+   text-align: center;
+   margin-bottom:4rem ;
+   flex-direction: column;
+} 
+
+.img-profile {
+    width: 25rem;
+    height: 25rem;
+    padding: 1rem;
+   
+}
+
+.img-profile img {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 100%;
+    width: 100%;
+}
+
+.details-profile {
+}
