@@ -8,20 +8,41 @@ import { Modal } from "@mui/material";
 
 const TravelItem = (props) => {
   const [showMap, setShowMap] = useState(false);
-  const handleOpen = () => setShowMap(true);
-  const handleClose = () => setShowMap(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const handleOpenMap = () => setShowMap(true);
+  const handleCloseMap = () => setShowMap(false);
+  const handleOpenConfirm = () => setShowConfirm(true);
+  const handleCloseConfirm = () => setShowConfirm(false);
+  const confirmDelete = () => {
+    setShowConfirm(false);
+    console.log("DELETING..");
+  };
+
   return (
     <>
       <Modal
         open={showMap}
-        onClose={handleClose}
+        onClose={handleCloseMap}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <div className="map-container">
           <Map center={props.coordinates} zoom={16}></Map>
           <div className="button-close">
-            <Button onClick={handleClose}>Close</Button>
+            <Button onClick={handleCloseMap}>Close</Button>
+          </div>
+        </div>
+      </Modal>
+      <Modal open={showConfirm} onClose={handleCloseConfirm}>
+        <div className="confirm-container">
+          <div>
+            <h3>Are you sure to delete this travel?</h3>
+            <Button inverse onClick={confirmDelete}>
+              Yes
+            </Button>
+            <Button danger onClick={handleCloseConfirm}>
+              No
+            </Button>
           </div>
         </div>
       </Modal>
@@ -38,11 +59,13 @@ const TravelItem = (props) => {
             <p>{props.description}</p>
           </div>
           <div className="place-item__actions">
-            <Button inverse onClick={handleOpen}>
+            <Button inverse onClick={handleOpenMap}>
               View On Map
             </Button>
-            <Button to={`/posts/${props.id}`}>Edit</Button>
-            <Button danger>Delete</Button>
+            <Button to={`edit/${props.id}`}>Edit</Button>
+            <Button danger onClick={handleOpenConfirm}>
+              Delete
+            </Button>
           </div>
         </Card>
       </li>

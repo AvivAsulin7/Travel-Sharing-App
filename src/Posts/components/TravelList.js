@@ -2,6 +2,7 @@ import React from "react";
 import Card from "../../Shared/Card";
 import TravelItem from "./TravelItem";
 import "./TravelList.css";
+import Button from "../../Shared/FormElements/Button";
 
 const TravelList = (props) => {
   if (props.items.length === 0) {
@@ -9,7 +10,7 @@ const TravelList = (props) => {
       <div className="place-list center">
         <Card>
           <h2>No places found. Maybe create one?</h2>
-          <button to="/places/new">Share Place</button>
+          <Button to="/posts/new">Share Place</Button>
         </Card>
       </div>
     );

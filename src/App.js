@@ -5,6 +5,8 @@ import NewTravel from "./Posts/pages/NewTravel";
 import MainNavigation from "./Shared/Navigation/MainNavigation";
 import UserTravels from "./Posts/pages/UserTravels";
 import TravelDetails from "./Posts/pages/TravelDetails";
+import UpdateTravel from "./Posts/pages/UpdateTravel";
+import Auth from "./User/pages/Auth";
 
 const USERS = [
   {
@@ -62,6 +64,11 @@ function App() {
           ></Route>
           <Route path="/:userId/:postId" element={<TravelDetails />}></Route>
           <Route path="/posts/new" element={<NewTravel />}></Route>
+          <Route
+            path="/:userId/edit/:postId" // Edit travel page
+            element={<UpdateTravel />}
+          ></Route>
+          <Route path="/auth" element={<Auth />}></Route>
         </Routes>
       </main>
     </BrowserRouter>

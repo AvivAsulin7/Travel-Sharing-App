@@ -21,21 +21,24 @@ const inputReducer = (state, action) => {
   }
 };
 
+/////////////////////////////////////////////////////////////////////////////////////
+
 const Input = (props) => {
   const [inputState, dispatch] = useReducer(inputReducer, {
-    value: "",
-    isValid: false,
+    value: props.InitialValue || "",
+    isValid: props.InitialIsValid || false,
     isTouched: false,
   });
 
   const { id, onInput } = props;
 
   useEffect(() => {
-    onInput(id, inputState.value, inputState.isValid);
+    onInput(id, inputState.value, inputState.isValid); // every time we get change in one of this states - onInput(inputHandle) will run and check if all th inputs is valid - if yes, so the button is enabled
   }, [id, inputState.value, inputState.isValid, onInput]);
 
   const changeHandle = (e) => {
     dispatch({
+      // when the input changes, we wil wnat to check if the data is valid or not , and change the style of input (red or not).
       type: "CHANGE",
       value: e.target.value,
       validators: props.validators,
@@ -45,6 +48,7 @@ const Input = (props) => {
   const touchHandle = () => {
     dispatch({ type: "TOUCH" });
   };
+
   const element =
     props.element === "input" ? (
       <input
@@ -53,7 +57,7 @@ const Input = (props) => {
         placeholder={props.placeholder}
         onChange={changeHandle}
         onBlur={touchHandle}
-        // value={inputState.value}
+        value={inputState.value}
       />
     ) : (
       <textarea
@@ -61,7 +65,7 @@ const Input = (props) => {
         rows={props.rows || 3}
         onChange={changeHandle}
         onBlur={touchHandle}
-        // value={inputState.value}
+        value={inputState.value}
       />
     );
   return (

@@ -5,34 +5,12 @@ import {
   VALIDATOR_REQUIRE,
 } from "../../Shared/util/validators";
 import Button from "../../Shared/FormElements/Button";
+import { useForm } from "../../Shared/Hooks/FormHook";
 import "./NewTravel.css";
 
-const formReducer = (state, action) => {
-  switch (action.type) {
-    case "INPUT_CHANGE":
-      let formIsValid = true;
-      for (const inputId in state.inputs)
-        if (inputId === action.inputId)
-          formIsValid = formIsValid && action.isValid;
-        else formIsValid = formIsValid && state.inputs[inputId].isValid;
-
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.inputId]: { value: action.value, isValid: action.isValid },
-        },
-        isValid: formIsValid,
-      };
-
-    default:
-      return state;
-  }
-};
-
 const NewTravel = () => {
-  const [formState, dispatch] = useReducer(formReducer, {
-    inputs: {
+  const [formState, inputHandle] = useForm(
+    {
       title: {
         value: "",
         isValid: false,
@@ -42,17 +20,8 @@ const NewTravel = () => {
         isValid: false,
       },
     },
-    isValid: false,
-  });
-
-  const inputHandle = useCallback((id, value, isValid) => {
-    dispatch({
-      type: "INPUT_CHANGE",
-      value: value,
-      isValid: isValid,
-      inputId: id,
-    });
-  }, []);
+    false
+  );
 
   const TravelSumbitHandle = (event) => {
     event.preventDefault();

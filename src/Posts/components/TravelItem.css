@@ -60,6 +60,23 @@
   border-radius: 8px;
 }
 
+.confirm-container {
+  position: fixed;
+  display: block;
+  top: 22vh;
+  left: 25%;
+  width: 50%;
+  height: 40%;
+  padding:10%;
+  background: white;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.confirm-container h3 {
+  margin-bottom: 2rem;
+}
+
 .button-close {
   position: absolute;
   right: 3%;
@@ -71,4 +88,13 @@
   .place-item__image {
     height: 20rem;
   } 
+
+  .confirm-container {
+    width: 30%;
+    height: 30%;
+    padding: 4%;
+    top: 22vh;
+    left: 35%;
+    
+  }
 }
