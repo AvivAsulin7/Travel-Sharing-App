@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./Auth.css";
 import Card from "../../Shared/Card";
 import Input from "../../Shared/FormElements/Input";
@@ -9,8 +9,12 @@ import {
   VALIDATOR_REQUIRE,
 } from "../../Shared/util/validators";
 import { useForm } from "../../Shared/Hooks/FormHook";
+import { AuthContext } from "../../Shared/Contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
+  const navigate = useNavigate();
+  const auth = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
   const [formState, inputHandle, setFormData] = useForm(
     {
@@ -29,6 +33,9 @@ const Auth = () => {
   const sumbitAuth = (event) => {
     event.preventDefault();
     console.log(formState.inputs);
+    auth.login();
+    /// if the user and password is correct !
+    navigate("/");
   };
 
   const switchMode = () => {
@@ -61,7 +68,7 @@ const Auth = () => {
     <Card className="auth">
       <h2> {isLogin ? "Login" : "SignUp"}</h2>
       <hr />
-      <form>
+      <form onSubmit={sumbitAuth}>
         {!isLogin && (
           <Input
             element="input"
@@ -91,11 +98,7 @@ const Auth = () => {
           errorText="Please enter a valid password, at least 6 characters."
           onInput={inputHandle}
         />
-        <Button
-          type="sumbit"
-          disabled={!formState.isValid}
-          onClick={sumbitAuth}
-        >
+        <Button type="sumbit" disabled={!formState.isValid}>
           {isLogin ? "Login" : "SignUp"}
         </Button>
       </form>

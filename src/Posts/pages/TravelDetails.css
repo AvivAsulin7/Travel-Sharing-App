@@ -1,0 +1,22 @@
+.details-travel {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    gap: 1rem;
+    margin: 50px; 
+    color: #fff;
+}
+
+.details-travel-img {
+    padding: 0;
+}
+
+.details-travel-img img {
+    width: 700px;
+    height: 500px;
+    object-fit: cover;
+    margin:50px 10px 0;
+}
+
+
+.travel-details {
+}

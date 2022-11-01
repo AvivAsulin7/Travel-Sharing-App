@@ -5,8 +5,10 @@ import "./TravelItem.css";
 import Button from "../../Shared/FormElements/Button";
 import Map from "../../Shared/Map";
 import { Modal } from "@mui/material";
+import { AuthContext } from "../../Shared/Contexts/AuthContext";
 
 const TravelItem = (props) => {
+  const auth = useContext(AuthContext);
   const [showMap, setShowMap] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const handleOpenMap = () => setShowMap(true);
@@ -62,10 +64,14 @@ const TravelItem = (props) => {
             <Button inverse onClick={handleOpenMap}>
               View On Map
             </Button>
-            <Button to={`edit/${props.id}`}>Edit</Button>
-            <Button danger onClick={handleOpenConfirm}>
-              Delete
-            </Button>
+            {auth.isLoggedIn && (
+              <>
+                <Button to={`edit/${props.id}`}>Edit</Button>{" "}
+                <Button danger onClick={handleOpenConfirm}>
+                  Delete
+                </Button>{" "}
+              </>
+            )}
           </div>
         </Card>
       </li>

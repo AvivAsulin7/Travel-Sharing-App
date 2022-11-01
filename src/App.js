@@ -1,4 +1,5 @@
 import "./App.css";
+import { useCallback, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Users from "./User/pages/Users";
 import NewTravel from "./Posts/pages/NewTravel";
@@ -7,6 +8,7 @@ import UserTravels from "./Posts/pages/UserTravels";
 import TravelDetails from "./Posts/pages/TravelDetails";
 import UpdateTravel from "./Posts/pages/UpdateTravel";
 import Auth from "./User/pages/Auth";
+import { AuthContext } from "./Shared/Contexts/AuthContext";
 
 const USERS = [
   {
@@ -50,29 +52,67 @@ const DUMMY_TRAVELS = [
 ];
 
 function App() {
-  return (
-    <BrowserRouter>
-      <main>
-        <MainNavigation />
-        <Routes>
-          <Route path="/" element={<Users USERS={USERS} />}></Route>
-          <Route
-            path="/:userId"
-            element={
-              <UserTravels USERS={USERS} DUMMY_TRAVELS={DUMMY_TRAVELS} /> //Link to profile of the user.
-            }
-          ></Route>
-          <Route path="/:userId/:postId" element={<TravelDetails />}></Route>
-          <Route path="/posts/new" element={<NewTravel />}></Route>
-          <Route
-            path="/:userId/edit/:postId" // Edit travel page
-            element={<UpdateTravel />}
-          ></Route>
-          <Route path="/auth" element={<Auth />}></Route>
-        </Routes>
-      </main>
-    </BrowserRouter>
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const login = useCallback(() => {
+    setIsLoggedIn(true);
+  }, []);
+
+  const logout = useCallback(() => {
+    setIsLoggedIn(false);
+  }, []);
+
+  if (isLoggedIn)
+    return (
+      <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+        <BrowserRouter>
+          <main>
+            <MainNavigation />
+            <Routes>
+              <Route path="/" element={<Users />}></Route>
+              <Route
+                path="/:userId"
+                element={
+                  <UserTravels /> //Link to profile of the user.
+                }
+              ></Route>
+              <Route
+                path="/:userId/:postId"
+                element={<TravelDetails />}
+              ></Route>
+              <Route path="/posts/new" element={<NewTravel />}></Route>
+              <Route
+                path="/:userId/edit/:postId" // Edit travel page
+                element={<UpdateTravel />}
+              ></Route>
+            </Routes>
+          </main>
+        </BrowserRouter>
+      </AuthContext.Provider>
+    );
+  else
+    return (
+      <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+        <BrowserRouter>
+          <main>
+            <MainNavigation />
+            <Routes>
+              <Route path="/" element={<Users />}></Route>
+              <Route
+                path="/:userId"
+                element={
+                  <UserTravels /> //Link to profile of the user.
+                }
+              ></Route>
+              <Route
+                path="/:userId/:postId"
+                element={<TravelDetails />}
+              ></Route>
+              <Route path="/auth" element={<Auth />}></Route>
+            </Routes>
+          </main>
+        </BrowserRouter>
+      </AuthContext.Provider>
+    );
 }
 
 export default App;
