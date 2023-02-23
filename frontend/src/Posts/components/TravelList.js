@@ -5,17 +5,6 @@ import "./TravelList.css";
 import Button from "../../Shared/FormElements/Button";
 
 const TravelList = (props) => {
-  if (props.items.length === 0) {
-    return (
-      <div className="place-list center">
-        <Card>
-          <h2>No places found. Maybe create one?</h2>
-          <Button to="/posts/new">Share Place</Button>
-        </Card>
-      </div>
-    );
-  }
-
   return (
     <ul className="place-list">
       {props.items.map((travel) => (
@@ -28,6 +17,7 @@ const TravelList = (props) => {
           description={travel.description}
           creatorId={travel.creator}
           coordinates={travel.location}
+          handleDeletedTravel={props.handleDeletedTravel}
         />
       ))}
     </ul>

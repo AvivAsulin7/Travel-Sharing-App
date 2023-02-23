@@ -1,21 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import UsersList from "../components/UsersList";
-
-const USERS = [
-  {
-    id: "u1",
-    name: "Aviv Asulin",
-    country: "Israel",
-    city: "Ofakim",
-    age: "25",
-    image:
-      "https://pbs.twimg.com/profile_images/1564398871996174336/M-hffw5a_400x400.jpg",
-    postsCount: 3,
-  },
-];
+import { getUsers } from "../../api/api";
+import LoadingSpinner from "../../Shared/LoadingSpinner";
+import ErrorModal from "../../Shared/ErrorModal";
 
 const Users = () => {
-  return <UsersList items={USERS} />;
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      setIsLoading(true);
+      try {
+        const { data } = await getUsers();
+        setUsers(data.users);
+        setIsLoading(false);
+        console.log(data);
+      } catch (error) {
+        setIsLoading(false);
+        console.log(error);
+        setError(true);
+      }
+    };
+    fetchUsers();
+  }, []);
+  return (
+    <>
+      {isLoading && <LoadingSpinner />}
+      {setError && <ErrorModal error={error} setError={setError} />}
+      <UsersList items={users} />
+    </>
+  );
 };
 
 export default Users;

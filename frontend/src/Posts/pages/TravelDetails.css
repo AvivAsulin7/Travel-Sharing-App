@@ -2,21 +2,47 @@
     display: grid;
     grid-template-columns: 40% 60%;
     gap: 1rem;
-    margin: 50px; 
+    margin: 120px ; 
+    padding:50px 30px;
     color: #fff;
-}
-
-.details-travel-img {
-    padding: 0;
+    text-transform: capitalize;
+    border: 1px solid #fff;
+    border-radius: 1rem;
 }
 
 .details-travel-img img {
     width: 700px;
     height: 500px;
     object-fit: cover;
-    margin:50px 10px 0;
+    border-radius: 1.2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 }
 
+.details-travel-info {
+    margin-left: 90px;
+    display: flex;
+    flex-direction: column;
+}
 
-.travel-details {
+.detail {
+    background: #292929;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    border-radius: 1.2rem;
+    text-align: center;
+    border:1px solid transparent;
+}
+
+.detail:hover {
+    background-color: transparent;
+    border: 1px solid #fff;
+}
+
+.details-travel-info h1,span {
+    margin: 20px;
+    text-align: center;
+}
+
+.detail p {
+    text-align: center;
 }

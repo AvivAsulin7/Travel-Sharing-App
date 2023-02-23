@@ -1,60 +1,81 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
 import TravelList from "../components/TravelList";
 import Profile from "../components/Profile";
 import { useParams } from "react-router-dom";
 import "../components/Profile.css";
-
-const USERS = [
-  {
-    id: "u1",
-    name: "Aviv Asulin",
-    country: "Israel",
-    city: "Ofakim",
-    age: "25",
-    image:
-      "https://pbs.twimg.com/profile_images/1564398871996174336/M-hffw5a_400x400.jpg",
-    postsCount: 3,
-  },
-];
-
-const DUMMY_TRAVELS = [
-  {
-    id: "p1",
-    title: "Madrid",
-    description: "One of the most famous cities in the world !",
-    image:
-      "https://www.travelandleisure.com/thmb/RSoOIuu5uFZcZEUnTh9X8hNZvCk=/1800x1200/filters:fill(auto,1)/aerial-madrid-MADRIDREN1021-b0d6169b39884280ac131f0c3d233623.jpg",
-    location: {
-      lat: 40.4379543,
-      lng: -3.6795367,
-    },
-    creator: "u1",
-  },
-  {
-    id: "p2",
-    title: "London",
-    description: "One of the most famous cities in the world !",
-    dates: "17-22 october 22",
-    image:
-      "https://a.cdn-hotels.com/gdcs/production55/d1816/e4f30f70-a6c6-11e8-bc7c-0242ac110002.jpg",
-    location: {
-      lat: 51.5286416,
-      lng: -0.1015987,
-    },
-    creator: "u2",
-  },
-];
+import { getUser } from "../../api/api";
+import { getTravelsByUser } from "../../api/api";
+import LoadingSpinner from "../../Shared/LoadingSpinner";
+import Card from "../../Shared/Card";
+import Button from "../../Shared/FormElements/Button";
+import colorNavContext from "../../Shared/Contexts/colorNavContext";
+import { AuthContext } from "../../Shared/Contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 const UserTravels = () => {
+  const [user, setUser] = useState({});
+  const [travels, setTravels] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const { userId } = useParams();
-  console.log(userId);
-  const user = USERS.find((item) => item.id === userId);
-  const UserTravels = DUMMY_TRAVELS.filter((item) => item.creator === userId);
+  const { setIsActive } = useContext(colorNavContext);
+  const auth = useContext(AuthContext);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const fetchUser = async () => {
+      try {
+        const { data } = await getUser(userId);
+        // console.log(data); // data = { user{...} , object{...} }
+        setUser(data.user);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
+      }
+    };
+    const getTravels = async () => {
+      try {
+        const { data } = await getTravelsByUser(userId);
+        console.log(data.travels); // data = { user{...} , object{...} }
+        setTravels(data.travels);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
+      }
+    };
+    fetchUser();
+    getTravels();
+  }, []);
+
+  const handleDeletedTravel = (deletedTravelId) => {
+    setTravels((prevTravels) =>
+      prevTravels.filter((travel) => travel.id !== deletedTravelId)
+    );
+  };
+
   return (
-    <div className="profile-page">
-      <Profile user={user} />
-      <TravelList items={UserTravels} />{" "}
-    </div>
+    <>
+      {isLoading && <LoadingSpinner />}
+      <div className="profile-page">
+        <Profile user={user} />
+        {travels.length === 0 && auth.userId === user.id ? (
+          <div className="place-list center">
+            <Card>
+              <h2>No places found. Maybe create one?</h2>
+              <Link to="/posts/new" onClick={() => setIsActive("new-travel")}>
+                <Button>Share Place</Button>
+              </Link>
+            </Card>
+          </div>
+        ) : (
+          <TravelList
+            items={travels}
+            handleDeletedTravel={handleDeletedTravel}
+          />
+        )}
+      </div>
+    </>
   );
 };
 

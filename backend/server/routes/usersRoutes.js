@@ -1,12 +1,19 @@
 import express from "express";
 import { check } from "express-validator";
-import { signIn, signUp, getUsers } from "../controllers/usersControllers.js";
+import {
+  signIn,
+  signUp,
+  getUsers,
+  getSpecificUser,
+} from "../controllers/usersControllers.js";
+import imageUpload from "../middleware/imageUpload.js";
 
 const router = express.Router();
 
 router.get("/", getUsers);
 router.post(
   "/signup",
+  imageUpload.single("image"),
   [
     check("name").not().isEmpty(),
     check("email").normalizeEmail().isEmail(),
@@ -14,6 +21,7 @@ router.post(
   ],
   signUp
 );
-router.post("/:signin", signIn);
+router.post("/signin", signIn);
+router.get("/:userId", getSpecificUser);
 
 export default router;

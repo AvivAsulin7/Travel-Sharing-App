@@ -7,6 +7,7 @@ import {
   updateTravel,
   deleteTravel,
 } from "../controllers/travelsContorllers.js";
+import imageUpload from "../middleware/imageUpload.js";
 
 const router = express.Router();
 
@@ -14,7 +15,8 @@ router.get("/:pid", getTravelById);
 router.get("/user/:uid", getTravelsByUserId);
 router.post(
   "/newTravel",
-  [check("title").not().isEmpty(), check("description").isLength({ min: 5 })],
+  imageUpload.single("image"),
+  [(check("title").not().isEmpty(), check("description").isLength({ min: 5 }))],
   createTravel
 );
 router.patch(

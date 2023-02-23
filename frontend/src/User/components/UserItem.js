@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./UserItem.css";
 import Avatar from "../../Shared/Avatar";
-import Card from "../../Shared/Card";
 import { Link } from "react-router-dom";
+import colorNavContext from "../../Shared/Contexts/colorNavContext";
 
 const UserItem = ({ id, image, name, postsCount }) => {
+  const { setIsActive } = useContext(colorNavContext);
   return (
     <li className="user-item">
       <div className="user-item__content">
-        <Link to={`/${id}`}>
+        <Link to={`/${id}`} onClick={() => setIsActive("profile")}>
           <div className="user-item__image">
-            <Avatar image={image} alt={name} />
+            <Avatar image={`http://localhost:5000/${image}`} alt={name} />
           </div>
           <div className="user-item__info">
             <h2>{name}</h2>

@@ -1,4 +1,5 @@
-import React, { useCallback, useReducer } from "react";
+import React, { useCallback, useReducer, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Input from "../../Shared/FormElements/Input";
 import {
   VALIDATOR_MINLENGTH,
@@ -7,8 +8,16 @@ import {
 import Button from "../../Shared/FormElements/Button";
 import { useForm } from "../../Shared/Hooks/FormHook";
 import "./NewTravel.css";
+import { createTravel } from "../../api/api";
+import { AuthContext } from "../../Shared/Contexts/AuthContext";
+import ErrorModal from "../../Shared/ErrorModal";
+import LoadingSpinner from "../../Shared/LoadingSpinner";
+import ImageUpload from "../../Shared/FormElements/ImageUpload";
 
 const NewTravel = () => {
+  const auth = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [formState, inputHandle] = useForm(
     {
       title: {
@@ -19,25 +28,49 @@ const NewTravel = () => {
         value: "",
         isValid: false,
       },
+      image: {
+        value: null,
+        isValid: false,
+      },
     },
     false
   );
+  const navigate = useNavigate();
 
-  const TravelSumbitHandle = (event) => {
+  const TravelSumbitHandle = async (event) => {
     event.preventDefault();
-    console.log(formState.inputs); // send to backend !
+    setIsLoading(true);
+    let newTravel;
+    const formData = new FormData();
+    formData.append("title", formState.inputs.title.value);
+    formData.append("description", formState.inputs.description.value);
+    formData.append("creator", auth.userId);
+    formData.append("image", formState.inputs.image.value);
+
+    try {
+      newTravel = await createTravel(formData);
+      setIsLoading(false);
+      console.log(newTravel);
+      navigate("/");
+    } catch (error) {
+      setIsLoading(false);
+      setError(true);
+      console.log(error);
+    }
   };
 
   return (
     <form className="travel-form" onSubmit={TravelSumbitHandle}>
+      {isLoading && <LoadingSpinner />}
+      {setError && <ErrorModal error={error} setError={setError} />}
       <Input
         id="title"
         element="input"
         type="text"
-        label="Title"
-        placeholder="Title"
+        label="Location"
+        placeholder="Location"
         validators={[VALIDATOR_REQUIRE()]}
-        errorText="Please enter a valid title"
+        errorText="Please enter a valid Location"
         onInput={inputHandle}
       />
       <Input
@@ -48,6 +81,11 @@ const NewTravel = () => {
         validators={[VALIDATOR_MINLENGTH(5)]}
         errorText="Please enter a valid description (at least 5 characters)."
         onInput={inputHandle}
+      />
+      <ImageUpload
+        id="image"
+        onInput={inputHandle}
+        errorText="Please enter an image"
       />
       <Button type="sumbit" disabled={!formState.isValid}>
         Add Travel

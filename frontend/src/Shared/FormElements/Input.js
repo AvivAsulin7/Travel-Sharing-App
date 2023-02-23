@@ -38,7 +38,7 @@ const Input = (props) => {
 
   const changeHandle = (e) => {
     dispatch({
-      // when the input changes, we wil wnat to check if the data is valid or not , and change the style of input (red or not).
+      // when the input changes, we wil want to check if the data is valid or not , and change the style of input (red or not).
       type: "CHANGE",
       value: e.target.value,
       validators: props.validators,

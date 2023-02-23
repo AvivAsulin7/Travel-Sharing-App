@@ -1,11 +1,18 @@
 import React, { useState, useContext } from "react";
 import "./NavLinks.css";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, Navigate, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Contexts/AuthContext";
+import colorNavContext from "../Contexts/colorNavContext";
 
 const NavLinks = () => {
   const auth = useContext(AuthContext);
-  const [isActive, setIsActive] = useState("home");
+  const { isActive, setIsActive } = useContext(colorNavContext);
+  const navigate = useNavigate();
+
+  const changePageToHome = () => {
+    auth.logout();
+    navigate("/");
+  };
 
   return (
     <ul className="nav-links">
@@ -24,14 +31,13 @@ const NavLinks = () => {
         <li>
           <NavLink
             className={isActive === "profile" ? "active" : "nav-links a "}
-            to="/u1"
+            to={`/${auth.userId}`}
             onClick={() => {
               setIsActive("profile");
             }}
           >
             Profile
           </NavLink>{" "}
-          {/* MY PLACES */}
         </li>
       )}
       {auth.isLoggedIn && (
@@ -62,7 +68,13 @@ const NavLinks = () => {
       )}
       {auth.isLoggedIn && (
         <li>
-          <button onClick={auth.logout}>Logout</button>
+          <button
+            onClick={() => {
+              changePageToHome();
+            }}
+          >
+            Logout
+          </button>
         </li>
       )}
     </ul>

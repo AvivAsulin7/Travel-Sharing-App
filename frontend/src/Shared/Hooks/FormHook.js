@@ -1,5 +1,8 @@
 import React, { useCallback, useReducer } from "react";
 
+// setFormDate - to set value of form every time we get another page with another travel, example: travel id=1 to travel id=4
+// inputHandle - to follow every change in the input and check if is valid or not
+
 const formReducer = (state, action) => {
   switch (action.type) {
     case "INPUT_CHANGE":

@@ -26,9 +26,9 @@
 .nav-links a:active,
 .nav-links a.active ,
 .active {
-  background: #f8df00;
+  background: #2F58CD;
   border-color: #292929;
-  color: #292929;
+  color: #fff;
 }
 
 .nav-links button {
@@ -72,7 +72,7 @@
   
   .nav-links button:hover,
   .nav-links button:active {
-    background: #f8df00;
-    color: #292929;
+    background: #2F58CD;
+    color: #fff;
   }
 }

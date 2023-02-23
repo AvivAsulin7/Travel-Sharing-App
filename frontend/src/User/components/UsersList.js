@@ -1,32 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import UserItem from "./UserItem";
 import "./UsersList.css";
 import Card from "../../Shared/Card";
 
 const UsersList = ({ items }) => {
-  if (items.length === 0)
-    return (
-      <div className="center">
-        <Card>
-          <h2>No users found.</h2>
-        </Card>
-      </div>
-    );
+  const [isEmpty, setIsEmpty] = useState(false);
+  useEffect(() => {
+    if (items.length == 0) setIsEmpty(false);
+  }, []);
 
   return (
-    <ul className="users-list">
-      {items.map((user) => {
-        return (
-          <UserItem
-            key={user.id}
-            id={user.id}
-            image={user.image}
-            name={user.name}
-            postsCount={user.postsCount}
-          />
-        );
-      })}
-    </ul>
+    <>
+      {isEmpty && (
+        <div className="center">
+          <Card>
+            <h2>No users found.</h2>
+          </Card>
+        </div>
+      )}
+      <ul className="users-list">
+        {items.map((user) => {
+          return (
+            <UserItem
+              key={user.id}
+              id={user.id}
+              image={user.image}
+              name={user.name}
+              postsCount={user.travels.length}
+            />
+          );
+        })}
+      </ul>
+    </>
   );
 };
 
