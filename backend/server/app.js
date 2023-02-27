@@ -3,10 +3,12 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import path from "path";
 import fs from "fs";
-
 import travelsRouter from "./routes/travelsRoutes.js";
 import usersRouter from "./routes/usersRoutes.js";
 import { HttpError } from "./models/HttpError.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 app.use(bodyParser.json());
@@ -46,13 +48,10 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(
-    "mongodb+srv://Aviv852456:Aviv852456@travelapp.stgh0op.mongodb.net/fullstack?retryWrites=true&w=majority",
-    {
-      useNewUrlPArser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(process.env.CONNECTION_MONGODB, {
+    useNewUrlPArser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     app.listen(5000);
   })

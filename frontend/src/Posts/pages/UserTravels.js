@@ -62,7 +62,7 @@ const UserTravels = () => {
         {travels.length === 0 && auth.userId === user.id ? (
           <div className="place-list center">
             <Card>
-              <h2>No places found. Maybe create one?</h2>
+              <h2>No travels found. Maybe create one?</h2>
               <Link to="/posts/new" onClick={() => setIsActive("new-travel")}>
                 <Button>Share Place</Button>
               </Link>

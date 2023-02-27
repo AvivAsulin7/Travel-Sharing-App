@@ -1,15 +1,22 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./UserItem.css";
 import Avatar from "../../Shared/Avatar";
 import { Link } from "react-router-dom";
 import colorNavContext from "../../Shared/Contexts/colorNavContext";
+import { AuthContext } from "../../Shared/Contexts/AuthContext";
+import { useParams } from "react-router-dom";
 
 const UserItem = ({ id, image, name, postsCount }) => {
+  const auth = useContext(AuthContext);
   const { setIsActive } = useContext(colorNavContext);
+  const handleChangeNavColor = () => {
+    if (auth.userId === id) setIsActive("profile");
+  };
+
   return (
     <li className="user-item">
       <div className="user-item__content">
-        <Link to={`/${id}`} onClick={() => setIsActive("profile")}>
+        <Link to={`/${id}`} onClick={() => handleChangeNavColor()}>
           <div className="user-item__image">
             <Avatar image={`http://localhost:5000/${image}`} alt={name} />
           </div>

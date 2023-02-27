@@ -14,6 +14,7 @@ const TravelItem = (props) => {
   const auth = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [messageError, setMessageError] = useState("");
   const [showMap, setShowMap] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const handleOpenMap = () => setShowMap(true);
@@ -24,7 +25,7 @@ const TravelItem = (props) => {
     setShowConfirm(false);
     setIsLoading(true);
     try {
-      const { data } = await deleteTravel(props.id);
+      const { data } = await deleteTravel(props.id, auth.token);
       console.log(data.message);
       setIsLoading(false);
       props.handleDeletedTravel(props.id);
@@ -32,12 +33,15 @@ const TravelItem = (props) => {
       console.log(error);
       setIsLoading(false);
       setError(true);
+      setMessageError(error.response.data.message);
     }
   };
 
   return (
     <>
-      {error && <ErrorModal error={error} setError={setError} />}
+      {error && (
+        <ErrorModal error={error} setError={setError} message={messageError} />
+      )}
       <Modal
         open={showMap}
         onClose={handleCloseMap}
@@ -77,7 +81,7 @@ const TravelItem = (props) => {
           </Link>
           <div className="place-item__info">
             <h2>{props.title}</h2>
-            <h3>{props.dates}</h3>
+            <h3>{props.header}</h3>
             <p>{props.description}</p>
           </div>
           <div className="place-item__actions">

@@ -9,17 +9,23 @@ export const getUser = (userId) => axios.get(`${url}/users/${userId}`);
 
 ///////////////
 
-export const createTravel = (travel) =>
-  axios.post(`${url}/travels/newTravel`, travel);
-
 export const getTravelsByUser = (userId) =>
   axios.get(`${url}/travels/user/${userId}`);
 
 export const getTravelById = (travelId) =>
   axios.get(`${url}/travels/${travelId}`);
 
-export const updateDetailsOfTravel = (travelId, details) =>
-  axios.patch(`${url}/travels/${travelId}`, details);
+export const createTravel = (travel, token) =>
+  axios.post(`${url}/travels/newTravel`, travel, {
+    headers: { Authorization: "Bearer " + token },
+  });
 
-export const deleteTravel = (travelId) =>
-  axios.delete(`${url}/travels/${travelId}`);
+export const updateDetailsOfTravel = (travelId, details, token) =>
+  axios.patch(`${url}/travels/${travelId}`, details, {
+    headers: { Authorization: "Bearer " + token },
+  });
+
+export const deleteTravel = (travelId, token) =>
+  axios.delete(`${url}/travels/${travelId}`, {
+    headers: { Authorization: "Bearer " + token },
+  });

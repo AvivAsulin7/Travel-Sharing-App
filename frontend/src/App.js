@@ -1,5 +1,5 @@
 import "./App.css";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Users from "./User/pages/Users";
 import NewTravel from "./Posts/pages/NewTravel";
@@ -12,24 +12,43 @@ import { AuthContext } from "./Shared/Contexts/AuthContext";
 import colorNavContext from "./Shared/Contexts/colorNavContext";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState(false);
   const [userId, setUserId] = useState();
   const [isActive, setIsActive] = useState("home");
 
-  const login = useCallback((uid) => {
+  const login = useCallback((uid, token, expirationDate) => {
     setUserId(uid);
-    setIsLoggedIn(true);
-    console.log(userId);
+    setToken(token);
+    const tokenExpirationDate =
+      expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({
+        userId: uid,
+        token: token,
+        expiration: tokenExpirationDate.toISOString(),
+      })
+    );
   }, []);
 
   const logout = useCallback(() => {
     setUserId(null);
-    setIsLoggedIn(false);
+    setToken(null);
+    localStorage.removeItem("userData");
   }, []);
 
-  if (isLoggedIn)
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("userData"));
+    if (data && data.token && new Date(data.expiration) > new Date()) {
+      login(data.userId, data.token, new Date(data.expiration));
+    }
+  }, []);
+
+  if (token)
     return (
-      <AuthContext.Provider value={{ isLoggedIn, login, logout, userId }}>
+      <AuthContext.Provider
+        value={{ isLoggedIn: !!token, token, login, logout, userId }}
+      >
         <colorNavContext.Provider value={{ isActive, setIsActive }}>
           <BrowserRouter>
             <main>
@@ -59,7 +78,9 @@ function App() {
     );
   else
     return (
-      <AuthContext.Provider value={{ isLoggedIn, login, logout, userId }}>
+      <AuthContext.Provider
+        value={{ isLoggedIn: !!token, token, login, logout, userId }}
+      >
         <colorNavContext.Provider value={{ isActive, setIsActive }}>
           <BrowserRouter>
             <main>

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import "./NavLinks.css";
-import { NavLink, Link, Navigate, useNavigate } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Contexts/AuthContext";
 import colorNavContext from "../Contexts/colorNavContext";
 

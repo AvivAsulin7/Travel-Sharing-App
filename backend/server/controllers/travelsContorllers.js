@@ -57,8 +57,7 @@ export const createTravel = async (req, res, next) => {
   if (!errors.isEmpty())
     next(new HttpError("Invalid inputs passed, please check your data.", 422));
 
-  const { title, description, creator } = req.body;
-  console.log(title, description);
+  const { title, header, description, creator } = req.body;
 
   let coordinates;
   try {
@@ -69,6 +68,7 @@ export const createTravel = async (req, res, next) => {
 
   const createdTravel = new Travel({
     title,
+    header,
     description,
     location: coordinates,
     image: req.file.path,
@@ -114,22 +114,27 @@ export const updateTravel = async (req, res, next) => {
       HttpError("Invalid inputs passed, please check your data.", 422)
     );
 
-  const { title, description } = req.body;
+  const { header, description } = req.body;
   const travelId = req.params.pid;
-
-  // looking fot new coordinates for the location(title)
-  let coordinates;
-  try {
-    coordinates = await getCoordinates(title);
-  } catch (error) {
-    return next(error);
-  }
 
   let travel;
   try {
-    travel = await Travel.findByIdAndUpdate(travelId, {
-      $set: { title: title, description: description, location: coordinates },
-    });
+    travel = await Travel.findById(travelId);
+  } catch (error) {
+    return next(new HttpError("Could not update travel", 500));
+  }
+
+  if (travel.creator.toString() !== req.userDate.userId) {
+    return next(
+      new HttpError("You have no credetials to edit this travels!", 401)
+    );
+  }
+
+  travel.header = header;
+  travel.description = description;
+
+  try {
+    await travel.save();
   } catch (error) {
     return next(new HttpError("Could not update travel", 500));
   }
@@ -153,6 +158,12 @@ export const deleteTravel = async (req, res, next) => {
 
   if (!deletedTravel) {
     return next(new HttpError("Could not find travel for this id", 500));
+  }
+
+  if (deletedTravel.creator.id !== req.userDate.userId) {
+    return next(
+      new HttpError("You have no credetials to delete this travels!", 401)
+    );
   }
 
   const deletedImagePath = deletedTravel.image;

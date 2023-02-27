@@ -8,11 +8,15 @@ import {
   deleteTravel,
 } from "../controllers/travelsContorllers.js";
 import imageUpload from "../middleware/imageUpload.js";
+import checkAuth from "../middleware/checkAuth.js";
 
 const router = express.Router();
 
 router.get("/:pid", getTravelById);
 router.get("/user/:uid", getTravelsByUserId);
+
+router.use(checkAuth);
+
 router.post(
   "/newTravel",
   imageUpload.single("image"),
@@ -21,7 +25,7 @@ router.post(
 );
 router.patch(
   "/:pid",
-  [check("title").not().isEmpty(), check("description").isLength({ min: 5 })],
+  [check("header").not().isEmpty(), check("description").isLength({ min: 5 })],
   updateTravel
 );
 router.delete("/:pid", deleteTravel);

@@ -18,9 +18,14 @@ const NewTravel = () => {
   const auth = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [messageError, setMessageError] = useState("");
   const [formState, inputHandle] = useForm(
     {
       title: {
+        value: "",
+        isValid: false,
+      },
+      header: {
         value: "",
         isValid: false,
       },
@@ -43,18 +48,20 @@ const NewTravel = () => {
     let newTravel;
     const formData = new FormData();
     formData.append("title", formState.inputs.title.value);
+    formData.append("header", formState.inputs.header.value);
     formData.append("description", formState.inputs.description.value);
     formData.append("creator", auth.userId);
     formData.append("image", formState.inputs.image.value);
 
     try {
-      newTravel = await createTravel(formData);
+      newTravel = await createTravel(formData, auth.token);
       setIsLoading(false);
       console.log(newTravel);
       navigate("/");
     } catch (error) {
       setIsLoading(false);
       setError(true);
+      setMessageError(error.response.data.message);
       console.log(error);
     }
   };
@@ -62,7 +69,9 @@ const NewTravel = () => {
   return (
     <form className="travel-form" onSubmit={TravelSumbitHandle}>
       {isLoading && <LoadingSpinner />}
-      {setError && <ErrorModal error={error} setError={setError} />}
+      {setError && (
+        <ErrorModal error={error} setError={setError} message={messageError} />
+      )}
       <Input
         id="title"
         element="input"
@@ -74,10 +83,20 @@ const NewTravel = () => {
         onInput={inputHandle}
       />
       <Input
+        id="header"
+        element="input"
+        type="text"
+        label="Title"
+        placeholder="Title"
+        validators={[VALIDATOR_MINLENGTH(5)]}
+        errorText="Please enter a valid Tile (at least 5 characters)."
+        onInput={inputHandle}
+      />
+      <Input
         id="description"
         element="textarea"
         label="Description"
-        placeholder="Title"
+        placeholder="Description"
         validators={[VALIDATOR_MINLENGTH(5)]}
         errorText="Please enter a valid description (at least 5 characters)."
         onInput={inputHandle}

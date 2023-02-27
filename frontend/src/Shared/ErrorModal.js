@@ -11,7 +11,7 @@ const ErrorModal = (props) => {
       aria-describedby="modal-modal-description"
     >
       <div className="confirm-container">
-        <h3>Something went wrong, please try Again</h3>
+        <h3>{props.message}</h3>
         <div className="button-close">
           <Button onClick={() => props.setError(false)}>Close</Button>
         </div>

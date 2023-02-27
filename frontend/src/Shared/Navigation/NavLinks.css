@@ -8,6 +8,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-weight: bold;
 }
 
 .nav-links li {
@@ -26,18 +27,19 @@
 .nav-links a:active,
 .nav-links a.active ,
 .active {
-  background: #2F58CD;
-  border-color: #292929;
-  color: #fff;
+  /* background: #F1C40F;
+  border-color: #292929; */
+  color: #F1C40F;
+  transition: ease-in-out 0.3s;
 }
 
 .nav-links button {
   cursor: pointer;
-  border: 1px solid #292929;
   color: #292929;
   background: transparent;
   padding: 0.5rem;
   font: inherit;
+  border: none;
 }
 
 .nav-links button:focus {
@@ -46,8 +48,9 @@
 
 .nav-links button:hover,
 .nav-links button:active {
-  background: #292929;
-  color: white;
+  color: #F1C40F;
+  transition: ease-in-out 0.3s;
+  border: none;
 }
 
 @media (min-width: 768px) {
@@ -65,14 +68,14 @@
   }
 
   .nav-links button {
-    border: 1px solid white;
     color: white;
     background: transparent;
+    border: none;
   }
   
   .nav-links button:hover,
   .nav-links button:active {
-    background: #2F58CD;
-    color: #fff;
+    color: #F1C40F;
+    transition: ease-in-out 0.3s;
   }
 }

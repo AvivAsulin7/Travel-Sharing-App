@@ -16,11 +16,13 @@ import { AuthContext } from "../../Shared/Contexts/AuthContext";
 
 const UpdateTravel = () => {
   const auth = useContext(AuthContext);
+  console.log(auth.token);
   const navigate = useNavigate();
   const { postId } = useParams();
   const [travel, setTravel] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [messageError, setMessageError] = useState("");
   const [formState, inputHandle, setFormData] = useForm(
     {
       title: {
@@ -44,10 +46,11 @@ const UpdateTravel = () => {
         setTravel(data.travel);
         setFormData(
           {
-            title: {
-              value: data.travel.title,
+            header: {
+              value: data.travel.header,
               isValid: true,
             },
+
             description: {
               value: data.travel.description,
               isValid: true,
@@ -60,6 +63,7 @@ const UpdateTravel = () => {
         console.log(error);
         setIsLoading(false);
         setError(true);
+        setMessageError(error.response.data.message);
       }
     };
     fetchTravel();
@@ -69,11 +73,11 @@ const UpdateTravel = () => {
     setIsLoading(true);
     event.preventDefault();
     const details = {
-      title: formState.inputs.title.value,
+      header: formState.inputs.header.value,
       description: formState.inputs.description.value,
     };
     try {
-      const { data } = await updateDetailsOfTravel(postId, details);
+      const { data } = await updateDetailsOfTravel(postId, details, auth.token);
       console.log(data.travel);
       setIsLoading(false);
       navigate(`/${auth.userId}`);
@@ -81,6 +85,7 @@ const UpdateTravel = () => {
       setIsLoading(false);
       console.log(error);
       setError(true);
+      setMessageError(error.response.data.message);
     }
   };
 
@@ -100,18 +105,20 @@ const UpdateTravel = () => {
 
   return (
     <>
-      {error && <ErrorModal error={error} setError={setError} />}
+      {error && (
+        <ErrorModal error={error} setError={setError} message={messageError} />
+      )}
       <form className="travel-form" onSubmit={travelUpdateSumbit}>
         <Input
-          id="title"
+          id="header"
           element="input"
           type="text"
           label="Title"
-          validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enterr a valid title."
+          validators={[VALIDATOR_MINLENGTH(5)]}
+          errorText="Please enterr a valid Title (min 5 characters)."
           onInput={inputHandle}
-          InitialValue={formState.inputs.title.value}
-          InitialIsValid={formState.inputs.title.isValid}
+          InitialValue={formState.inputs.header.value}
+          InitialIsValid={formState.inputs.header.isValid}
         />
         <Input
           id="description"

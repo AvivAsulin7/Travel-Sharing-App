@@ -13,7 +13,8 @@ const TravelList = (props) => {
           id={travel.id}
           image={travel.image}
           title={travel.title}
-          dates={travel.dates}
+          header={travel.header}
+          // dates={travel.dates}
           description={travel.description}
           creatorId={travel.creator}
           coordinates={travel.location}

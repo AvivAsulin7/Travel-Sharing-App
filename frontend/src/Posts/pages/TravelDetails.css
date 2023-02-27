@@ -43,6 +43,6 @@
     text-align: center;
 }
 
-.detail p {
-    text-align: center;
+.detail p,span {
+    font-size:1.1rem
 }

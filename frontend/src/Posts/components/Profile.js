@@ -1,5 +1,4 @@
 import React from "react";
-import Avatar from "../../Shared/Avatar";
 import "./Profile.css";
 
 const Profile = ({ user }) => {

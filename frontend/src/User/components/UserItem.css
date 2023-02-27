@@ -18,7 +18,7 @@
 
 .user-item a:hover,
 .user-item a:active {
-  background: #ffd900;
+  background: #F1C40F;
 }
 
 .user-item__content {
@@ -35,7 +35,7 @@
   font-size: 1.5rem;
   margin: 0 0 0.5rem 0;
   font-weight: normal;
-  color: #ffd900;
+  color: #F1C40F;
   text-transform: capitalize;
 }
 

@@ -24,6 +24,7 @@ const Auth = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [messageError, setMessageError] = useState("");
   const { setIsActive } = useContext(colorNavContext);
 
   const [formState, inputHandle, setFormData] = useForm(
@@ -52,7 +53,7 @@ const Auth = () => {
           password: formState.inputs.password.value,
         });
         setIsLoading(false);
-        auth.login(data.user.id);
+        auth.login(data.userId, data.token);
         setIsActive("home");
         navigate("/");
         console.log(data);
@@ -60,6 +61,7 @@ const Auth = () => {
         console.log(error);
         setIsLoading(false);
         setError(true);
+        setMessageError(error.response.data.message);
       }
     } else {
       try {
@@ -74,7 +76,7 @@ const Auth = () => {
         const { data } = await signUp(formData);
         setIsLoading(false);
         console.log(data);
-        auth.login(data.createdUser.id);
+        auth.login(data.userId, data.token);
         setIsActive("home");
         navigate("/");
         console.log(data);
@@ -82,6 +84,7 @@ const Auth = () => {
         console.log(error);
         setIsLoading(false);
         setError(true);
+        setMessageError(error.response.data.message);
       }
     }
   };
@@ -130,7 +133,9 @@ const Auth = () => {
   return (
     <Card className="auth">
       {isLoading && <LoadingSpinner />}
-      {error && <ErrorModal error={error} setError={setError} />}
+      {error && (
+        <ErrorModal error={error} setError={setError} message={messageError} />
+      )}
       <h2> {isLoginMode ? "Login" : "SignUp"}</h2>
       <hr />
       <form onSubmit={sumbitAuth}>
