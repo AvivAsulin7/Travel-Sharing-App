@@ -43,7 +43,6 @@ const Users = () => {
       ) : (
         <UsersList items={users} />
       )}
-      {/* <UsersList items={users} /> */}
     </>
   );
 };

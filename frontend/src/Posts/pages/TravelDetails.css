@@ -46,3 +46,41 @@
 .detail p,span {
     font-size:1.1rem
 }
+
+
+@media (max-width: 1440px) {
+    .details-travel {
+      display: flex;
+    }
+
+    .details-travel-info{
+        margin: auto;
+        width: 100%;
+    }
+}
+
+@media (max-width: 820px) {
+    .details-travel {
+        display: flex;
+        flex-direction: column;
+        margin:4rem
+    }
+
+    .details-travel-img img {
+        width: 100%;
+        max-height: 100%;
+    }
+
+}
+
+@media (max-width: 550px) {
+    .details-travel {
+        padding: 17px;
+        width: 20rem;
+        margin: auto;
+    }
+
+    .details-travel-img img {
+        height: 100%;
+    }
+}

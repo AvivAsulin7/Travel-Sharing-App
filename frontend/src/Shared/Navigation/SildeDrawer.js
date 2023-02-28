@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDom from "react-dom";
 import { Drawer, Button } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import NavLinks from "./NavLinks";
@@ -14,7 +13,7 @@ const SildeDrawer = ({ drawerIsOpen, setDrawerIsOpen }) => {
         onClose={() => {
           setDrawerIsOpen(false);
         }}
-        PaperProps={{ sx: { width: 220 } }}
+        PaperProps={{ sx: { width: 220, backgroundColor: "#ECF2FF" } }}
         anchor="left"
       >
         <nav className="main-navigation__drawer-nav">

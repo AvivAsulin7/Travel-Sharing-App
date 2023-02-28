@@ -1,8 +1,6 @@
 import React from "react";
-import Card from "../../Shared/Card";
 import TravelItem from "./TravelItem";
 import "./TravelList.css";
-import Button from "../../Shared/FormElements/Button";
 
 const TravelList = (props) => {
   return (
@@ -14,7 +12,6 @@ const TravelList = (props) => {
           image={travel.image}
           title={travel.title}
           header={travel.header}
-          // dates={travel.dates}
           description={travel.description}
           creatorId={travel.creator}
           coordinates={travel.location}

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Card from "../../Shared/Card";
 import "./TravelItem.css";
 import Button from "../../Shared/FormElements/Button";
