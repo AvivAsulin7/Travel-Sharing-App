@@ -25,7 +25,6 @@ const UserTravels = () => {
     const fetchUser = async () => {
       try {
         const { data } = await getUser(userId);
-        // console.log(data); // data = { user{...} , object{...} }
         setUser(data.user);
         setIsLoading(false);
       } catch (error) {
@@ -36,7 +35,6 @@ const UserTravels = () => {
     const getTravels = async () => {
       try {
         const { data } = await getTravelsByUser(userId);
-        console.log(data.travels); // data = { user{...} , object{...} }
         setTravels(data.travels);
         setIsLoading(false);
       } catch (error) {

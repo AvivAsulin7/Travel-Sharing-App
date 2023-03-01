@@ -4,10 +4,7 @@ import Button from "../../Shared/FormElements/Button";
 import Input from "../../Shared/FormElements/Input";
 import LoadingSpinner from "../../Shared/LoadingSpinner";
 import ErrorModal from "../../Shared/ErrorModal";
-import {
-  VALIDATOR_REQUIRE,
-  VALIDATOR_MINLENGTH,
-} from "../../Shared/util/validators";
+import { VALIDATOR_MINLENGTH } from "../../Shared/util/validators";
 import { useForm } from "../../Shared/Hooks/FormHook";
 import "./NewTravel.css";
 import { getTravelById } from "../../api/api";
@@ -16,7 +13,6 @@ import { AuthContext } from "../../Shared/Contexts/AuthContext";
 
 const UpdateTravel = () => {
   const auth = useContext(AuthContext);
-  console.log(auth.token);
   const navigate = useNavigate();
   const { postId } = useParams();
   const [travel, setTravel] = useState();
@@ -42,7 +38,6 @@ const UpdateTravel = () => {
       setIsLoading(true);
       try {
         const { data } = await getTravelById(postId);
-        console.log(data.travel);
         setTravel(data.travel);
         setFormData(
           {
@@ -78,7 +73,6 @@ const UpdateTravel = () => {
     };
     try {
       const { data } = await updateDetailsOfTravel(postId, details, auth.token);
-      console.log(data.travel);
       setIsLoading(false);
       navigate(`/${auth.userId}`);
     } catch (error) {

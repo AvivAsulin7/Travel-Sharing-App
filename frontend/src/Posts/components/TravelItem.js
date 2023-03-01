@@ -26,7 +26,6 @@ const TravelItem = (props) => {
     setIsLoading(true);
     try {
       const { data } = await deleteTravel(props.id, auth.token);
-      console.log(data.message);
       setIsLoading(false);
       props.handleDeletedTravel(props.id);
     } catch (error) {

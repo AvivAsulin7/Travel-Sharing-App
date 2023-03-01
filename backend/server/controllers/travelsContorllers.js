@@ -11,7 +11,6 @@ import { mongoose } from "mongoose";
 
 export const getTravelById = async (req, res, next) => {
   const TravelId = req.params.pid;
-  console.log(TravelId);
   let travel;
   try {
     travel = await Travel.findById(TravelId);

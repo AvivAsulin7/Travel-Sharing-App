@@ -3,7 +3,6 @@ import UsersList from "../components/UsersList";
 import { getUsers } from "../../api/api";
 import LoadingSpinner from "../../Shared/LoadingSpinner";
 import ErrorModal from "../../Shared/ErrorModal";
-import Card from "../../Shared/Card";
 
 const Users = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +17,6 @@ const Users = () => {
         const { data } = await getUsers();
         setUsers(data.users);
         setIsLoading(false);
-        console.log(data);
       } catch (error) {
         setIsLoading(false);
         console.log(error);
@@ -34,15 +32,7 @@ const Users = () => {
       {setError && (
         <ErrorModal error={error} setError={setError} message={messageError} />
       )}
-      {users.length === 0 ? (
-        <div className="center">
-          <Card>
-            <h2>No users found.</h2>
-          </Card>
-        </div>
-      ) : (
-        <UsersList items={users} />
-      )}
+      <UsersList items={users} />
     </>
   );
 };

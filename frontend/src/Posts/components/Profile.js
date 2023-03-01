@@ -2,7 +2,6 @@ import React from "react";
 import "./Profile.css";
 
 const Profile = ({ user }) => {
-  console.log(user);
   return (
     <div className="profile">
       <div className="upper-container">

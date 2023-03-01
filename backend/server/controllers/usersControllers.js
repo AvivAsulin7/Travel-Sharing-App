@@ -14,7 +14,6 @@ export const getUsers = async (req, res, next) => {
   let users;
   try {
     users = await User.find();
-    console.log(users);
   } catch (error) {
     return next(new HttpError("Getting users failed, please try again.", 500));
   }
@@ -151,11 +150,9 @@ export const signIn = async (req, res, next) => {
 
 export const getSpecificUser = async (req, res, next) => {
   const { userId } = req.params;
-  console.log(userId);
   let user;
   try {
     user = await User.findById(userId);
-    console.log(user);
   } catch (error) {
     return next(new HttpError("Getting user failed, please try again.", 500));
   }

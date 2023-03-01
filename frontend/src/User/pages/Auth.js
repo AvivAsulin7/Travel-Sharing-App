@@ -43,7 +43,6 @@ const Auth = () => {
 
   const sumbitAuth = async (event) => {
     event.preventDefault();
-    console.log(formState.inputs);
     setIsLoading(true);
 
     if (isLoginMode) {
@@ -56,7 +55,6 @@ const Auth = () => {
         auth.login(data.userId, data.token);
         setIsActive("home");
         navigate("/");
-        console.log(data);
       } catch (error) {
         console.log(error);
         setIsLoading(false);
@@ -75,11 +73,9 @@ const Auth = () => {
 
         const { data } = await signUp(formData);
         setIsLoading(false);
-        console.log(data);
         auth.login(data.userId, data.token);
         setIsActive("home");
         navigate("/");
-        console.log(data);
       } catch (error) {
         console.log(error);
         setIsLoading(false);

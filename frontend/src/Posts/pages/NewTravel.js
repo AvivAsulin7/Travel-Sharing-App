@@ -56,7 +56,6 @@ const NewTravel = () => {
     try {
       newTravel = await createTravel(formData, auth.token);
       setIsLoading(false);
-      console.log(newTravel);
       navigate("/");
     } catch (error) {
       setIsLoading(false);

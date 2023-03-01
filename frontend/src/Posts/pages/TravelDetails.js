@@ -18,7 +18,6 @@ const TravelDetails = () => {
       try {
         const { data } = await getTravelById(postId);
         setDetailsTravel(data.travel);
-        console.log(data.travel);
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -43,7 +42,6 @@ const TravelDetails = () => {
       setIsLoading(true);
       try {
         const response = await axios.request(options);
-        console.log(response.data);
         setInfoTravel(response.data);
         setIsLoading(false);
       } catch (error) {
