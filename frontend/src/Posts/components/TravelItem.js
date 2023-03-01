@@ -9,6 +9,7 @@ import LoadingSpinner from "../../Shared/LoadingSpinner";
 import { Modal } from "@mui/material";
 import { AuthContext } from "../../Shared/Contexts/AuthContext";
 import { deleteTravel } from "../../api/api";
+import { Image } from "cloudinary-react";
 
 const TravelItem = (props) => {
   const auth = useContext(AuthContext);
@@ -26,6 +27,7 @@ const TravelItem = (props) => {
     setIsLoading(true);
     try {
       const { data } = await deleteTravel(props.id, auth.token);
+      console.log(data.deletedTravel.image);
       setIsLoading(false);
       props.handleDeletedTravel(props.id);
     } catch (error) {
@@ -72,10 +74,7 @@ const TravelItem = (props) => {
           {isLoading && <LoadingSpinner />}
           <Link to={`/${props.creatorId}/${props.id}`}>
             <div className="place-item__image">
-              <img
-                src={`http://localhost:5000/${props.image}`}
-                alt={props.title}
-              ></img>
+              <Image cloudName="dmobqngyn" publicId={props.image} />
             </div>
           </Link>
           <div className="place-item__info">

@@ -7,7 +7,6 @@ import {
   updateTravel,
   deleteTravel,
 } from "../controllers/travelsContorllers.js";
-import imageUpload from "../middleware/imageUpload.js";
 import checkAuth from "../middleware/checkAuth.js";
 
 const router = express.Router();
@@ -19,7 +18,6 @@ router.use(checkAuth);
 
 router.post(
   "/newTravel",
-  imageUpload.single("image"),
   [(check("title").not().isEmpty(), check("description").isLength({ min: 5 }))],
   createTravel
 );

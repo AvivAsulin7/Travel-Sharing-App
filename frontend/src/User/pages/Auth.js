@@ -3,7 +3,6 @@ import "./Auth.css";
 import Card from "../../Shared/Card";
 import Input from "../../Shared/FormElements/Input";
 import Button from "../../Shared/FormElements/Button";
-import ImageUpload from "../../Shared/FormElements/ImageUpload";
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
@@ -17,6 +16,8 @@ import { useNavigate } from "react-router-dom";
 import { signIn, signUp } from "../../api/api";
 import LoadingSpinner from "../../Shared/LoadingSpinner";
 import ErrorModal from "../../Shared/ErrorModal";
+import ImageUpload from "../../Shared/FormElements/ImageUpload";
+import axios from "axios";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -64,14 +65,23 @@ const Auth = () => {
     } else {
       try {
         const formData = new FormData();
-        formData.append("email", formState.inputs.email.value);
-        formData.append("name", formState.inputs.name.value);
-        formData.append("password", formState.inputs.password.value);
-        formData.append("image", formState.inputs.image.value);
-        formData.append("city", formState.inputs.city.value);
-        formData.append("age", formState.inputs.age.value);
+        formData.append("file", formState.inputs.image.value);
+        formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESETS);
+        const response = await axios.post(
+          `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_NAME}/image/upload`,
+          formData
+        );
 
-        const { data } = await signUp(formData);
+        const newUser = {
+          email: formState.inputs.email.value,
+          name: formState.inputs.name.value,
+          password: formState.inputs.password.value,
+          image: response.data.secure_url,
+          city: formState.inputs.city.value,
+          age: formState.inputs.age.value,
+        };
+
+        const { data } = await signUp(newUser);
         setIsLoading(false);
         auth.login(data.userId, data.token);
         setIsActive("home");

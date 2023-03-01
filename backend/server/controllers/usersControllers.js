@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
 import { validationResult } from "express-validator";
 import { HttpError } from "../models/HttpError.js";
 import { User } from "../models/User.js";
@@ -27,7 +26,7 @@ export const signUp = async (req, res, next) => {
   if (!errors.isEmpty())
     return next(new HttpError("Invalid inputs , please check your data!", 422));
   const user = req.body;
-  const { name, email, password, city, age } = user;
+  const { name, email, password, image, city, age } = user;
 
   let existUser;
   try {
@@ -55,7 +54,7 @@ export const signUp = async (req, res, next) => {
     name,
     email,
     password: hashedPassword,
-    image: req.file.path,
+    image,
     city,
     age,
     travels: [],
@@ -64,7 +63,7 @@ export const signUp = async (req, res, next) => {
   try {
     await createdUser.save();
   } catch (error) {
-    return next(new HttpError("Signing Up failed , please try again.", 500));
+    return next(new HttpError("Signing Up failed , please try again!", 500));
   }
 
   let token;

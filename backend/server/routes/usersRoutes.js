@@ -6,14 +6,12 @@ import {
   getUsers,
   getSpecificUser,
 } from "../controllers/usersControllers.js";
-import imageUpload from "../middleware/imageUpload.js";
 
 const router = express.Router();
 
 router.get("/", getUsers);
 router.post(
   "/signup",
-  imageUpload.single("image"),
   [
     check("name").not().isEmpty(),
     check("email").normalizeEmail().isEmail(),

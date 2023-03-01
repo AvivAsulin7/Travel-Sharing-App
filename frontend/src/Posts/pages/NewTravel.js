@@ -11,8 +11,9 @@ import "./NewTravel.css";
 import { createTravel } from "../../api/api";
 import { AuthContext } from "../../Shared/Contexts/AuthContext";
 import ErrorModal from "../../Shared/ErrorModal";
-import LoadingSpinner from "../../Shared/LoadingSpinner";
 import ImageUpload from "../../Shared/FormElements/ImageUpload";
+import LoadingSpinner from "../../Shared/LoadingSpinner";
+import axios from "axios";
 
 const NewTravel = () => {
   const auth = useContext(AuthContext);
@@ -45,16 +46,24 @@ const NewTravel = () => {
   const TravelSumbitHandle = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    let newTravel;
-    const formData = new FormData();
-    formData.append("title", formState.inputs.title.value);
-    formData.append("header", formState.inputs.header.value);
-    formData.append("description", formState.inputs.description.value);
-    formData.append("creator", auth.userId);
-    formData.append("image", formState.inputs.image.value);
-
     try {
-      newTravel = await createTravel(formData, auth.token);
+      const formData = new FormData();
+      formData.append("file", formState.inputs.image.value);
+      formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESETS);
+      const response = await axios.post(
+        `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_NAME}/image/upload`,
+        formData
+      );
+
+      const newTravel = {
+        title: formState.inputs.title.value,
+        header: formState.inputs.header.value,
+        description: formState.inputs.description.value,
+        creator: auth.userId,
+        image: response.data.secure_url,
+      };
+
+      await createTravel(newTravel, auth.token);
       setIsLoading(false);
       navigate("/");
     } catch (error) {

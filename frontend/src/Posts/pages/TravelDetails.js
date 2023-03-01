@@ -4,6 +4,7 @@ import "./TravelDetails.css";
 import { getTravelById } from "../../api/api";
 import LoadingSpinner from "../../Shared/LoadingSpinner";
 import Button from "../../Shared/FormElements/Button";
+import { Image } from "cloudinary-react";
 import axios from "axios";
 
 const TravelDetails = () => {
@@ -59,7 +60,7 @@ const TravelDetails = () => {
       {isLoading && <LoadingSpinner />}
       <div className="details-travel">
         <div className="details-travel-img">
-          <img src={`http://localhost:5000/${detailsTravel.image}`}></img>
+          <Image cloudName="dmobqngyn" publicId={detailsTravel.image} />
         </div>
         {infoTravel.location && (
           <div className="details-travel-info">

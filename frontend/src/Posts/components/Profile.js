@@ -1,4 +1,5 @@
 import React from "react";
+import { Image } from "cloudinary-react";
 import "./Profile.css";
 
 const Profile = ({ user }) => {
@@ -6,7 +7,7 @@ const Profile = ({ user }) => {
     <div className="profile">
       <div className="upper-container">
         <div className="img-profile">
-          <img src={`http://localhost:5000/${user.image}`} alt="user"></img>
+          <Image cloudName="dmobqngyn" publicId={user.image} />
         </div>
       </div>
       <div className="details-profile">

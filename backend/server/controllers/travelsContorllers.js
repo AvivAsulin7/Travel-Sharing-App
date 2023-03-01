@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
-import fs from "fs";
 import { validationResult } from "express-validator";
 import { getCoordinates } from "../util/location.js";
 import { HttpError } from "../models/HttpError.js";
@@ -56,7 +54,7 @@ export const createTravel = async (req, res, next) => {
   if (!errors.isEmpty())
     next(new HttpError("Invalid inputs passed, please check your data.", 422));
 
-  const { title, header, description, creator } = req.body;
+  const { title, header, description, creator, image } = req.body;
 
   let coordinates;
   try {
@@ -70,7 +68,7 @@ export const createTravel = async (req, res, next) => {
     header,
     description,
     location: coordinates,
-    image: req.file.path,
+    image,
     creator,
   });
 
@@ -165,8 +163,6 @@ export const deleteTravel = async (req, res, next) => {
     );
   }
 
-  const deletedImagePath = deletedTravel.image;
-
   try {
     console.log(deletedTravel);
     const sess = await mongoose.startSession();
@@ -180,10 +176,6 @@ export const deleteTravel = async (req, res, next) => {
       new HttpError("Something went wrong, could not delete travel.", 500)
     );
   }
-
-  fs.unlink(deletedImagePath, (err) => {
-    console.log(err);
-  });
 
   res.status(200).json({ deletedTravel, message: "Deleted Travel" });
 };
