@@ -73,7 +73,7 @@ const Auth = () => {
         );
 
         const newUser = {
-          email: formState.inputs.email.value,
+          email: formState.inputs.email.value.toLowerCase(),
           name: formState.inputs.name.value,
           password: formState.inputs.password.value,
           image: response.data.secure_url,
