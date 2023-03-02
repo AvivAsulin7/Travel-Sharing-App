@@ -88,12 +88,19 @@ const TravelItem = (props) => {
             </Button>
             {auth.userId === props.creatorId && (
               <>
-                <Button to={`edit/${props.id}`}>Edit</Button>{" "}
+                <Link to={`edit/${props.id}`}>
+                  <Button>Edit</Button>
+                </Link>{" "}
                 <Button danger onClick={handleOpenConfirm}>
                   Delete
                 </Button>{" "}
               </>
             )}
+            <Link to={`/${props.creatorId}/${props.id}`}>
+              <Button info onClick={handleOpenMap}>
+                Info
+              </Button>
+            </Link>
           </div>
         </Card>
       </li>

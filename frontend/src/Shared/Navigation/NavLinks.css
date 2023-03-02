@@ -17,7 +17,7 @@
 
 .nav-links a {
   border: 1px solid transparent;
-  color: #292929;
+  color: #fff;
   text-decoration: none;
   padding: 0.5rem;
 }
@@ -27,15 +27,13 @@
 .nav-links a:active,
 .nav-links a.active ,
 .active {
-  /* background: #F1C40F;
-  border-color: #292929; */
   color: #F1C40F;
   transition: ease-in-out 0.3s;
 }
 
 .nav-links button {
   cursor: pointer;
-  color: #292929;
+  color: #fff;
   background: transparent;
   padding: 0.5rem;
   font: inherit;

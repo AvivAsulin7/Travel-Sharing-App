@@ -106,10 +106,12 @@
 @media (max-width: 500px) {
   .place-item__actions {
    display: flex;
+   flex-direction: column;
   }
 
   .place-item__actions button {
     margin: auto;
+    width: 10rem;
   }
 
 }

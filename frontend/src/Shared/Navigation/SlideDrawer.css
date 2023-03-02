@@ -8,4 +8,11 @@
     background: white;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   }
+
+  .icon-slider {
+    width: 150px;
+    left: 30px;
+    top:90px;
+    position: absolute;
+  }
   

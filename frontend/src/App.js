@@ -1,6 +1,6 @@
 import "./App.css";
 import { useCallback, useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, HashRouter } from "react-router-dom";
 import Users from "./User/pages/Users";
 import NewTravel from "./Posts/pages/NewTravel";
 import MainNavigation from "./Shared/Navigation/MainNavigation";
@@ -50,7 +50,7 @@ function App() {
         value={{ isLoggedIn: !!token, token, login, logout, userId }}
       >
         <colorNavContext.Provider value={{ isActive, setIsActive }}>
-          <BrowserRouter>
+          <HashRouter>
             <main>
               <MainNavigation />
               <Routes>
@@ -72,7 +72,7 @@ function App() {
                 ></Route>
               </Routes>
             </main>
-          </BrowserRouter>
+          </HashRouter>
         </colorNavContext.Provider>
       </AuthContext.Provider>
     );
@@ -82,7 +82,7 @@ function App() {
         value={{ isLoggedIn: !!token, token, login, logout, userId }}
       >
         <colorNavContext.Provider value={{ isActive, setIsActive }}>
-          <BrowserRouter>
+          <HashRouter>
             <main>
               <MainNavigation />
               <Routes>
@@ -100,7 +100,7 @@ function App() {
                 <Route path="/auth" element={<Auth />}></Route>
               </Routes>
             </main>
-          </BrowserRouter>
+          </HashRouter>
         </colorNavContext.Provider>
       </AuthContext.Provider>
     );

@@ -1,10 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import "./UserItem.css";
 import Avatar from "../../Shared/Avatar";
 import { Link } from "react-router-dom";
 import colorNavContext from "../../Shared/Contexts/colorNavContext";
 import { AuthContext } from "../../Shared/Contexts/AuthContext";
-import { useParams } from "react-router-dom";
 
 const UserItem = ({ id, image, name, postsCount }) => {
   const auth = useContext(AuthContext);

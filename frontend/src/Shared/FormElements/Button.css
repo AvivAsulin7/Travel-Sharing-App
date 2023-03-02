@@ -21,6 +21,12 @@
   border-color: #7286D3;
 }
 
+.button--info {
+  background: #F1C40F;
+  color: #fff ;
+  border-color: #F1C40F;
+}
+
 .button--inverse {
   background: transparent;
   color: #34B3F1 ;
