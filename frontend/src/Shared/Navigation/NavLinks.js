@@ -1,16 +1,20 @@
 import React, { useState, useContext } from "react";
-import "./NavLinks.css";
 import { NavLink, Link, useNavigate } from "react-router-dom";
+import { useMediaQuery, useTheme } from "@mui/material";
 import { AuthContext } from "../Contexts/AuthContext";
 import colorNavContext from "../Contexts/colorNavContext";
+import "./NavLinks.css";
 
-const NavLinks = () => {
+const NavLinks = ({ setDrawerIsOpen }) => {
   const auth = useContext(AuthContext);
   const { isActive, setIsActive } = useContext(colorNavContext);
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMatch = useMediaQuery(theme.breakpoints.down("md"));
 
   const changePageToHome = () => {
     auth.logout();
+    setIsActive("home");
     navigate("/");
   };
 
@@ -98,6 +102,17 @@ const NavLinks = () => {
             </NavLink>
           </li>
         </>
+      )}
+      {isMatch && (
+        <li>
+          <button
+            onClick={() => {
+              setDrawerIsOpen(false);
+            }}
+          >
+            Close
+          </button>
+        </li>
       )}
     </ul>
   );

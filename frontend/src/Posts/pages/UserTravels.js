@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 const UserTravels = () => {
   const [user, setUser] = useState({});
   const [travels, setTravels] = useState([]);
+  //const [isTravels, setIsTravels] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const { userId } = useParams();
   const { setIsActive } = useContext(colorNavContext);
@@ -36,6 +37,9 @@ const UserTravels = () => {
       try {
         const { data } = await getTravelsByUser(userId);
         setTravels(data.travels);
+        // if (travels.length === 0) {
+        //    setIsTravels(false);
+        //  }
         setIsLoading(false);
       } catch (error) {
         console.log(error);

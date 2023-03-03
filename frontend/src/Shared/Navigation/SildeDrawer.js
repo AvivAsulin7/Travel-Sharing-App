@@ -19,7 +19,7 @@ const SildeDrawer = ({ drawerIsOpen, setDrawerIsOpen }) => {
       >
         <img src={icon} className="icon-slider" />
         <nav className="main-navigation__drawer-nav">
-          <NavLinks />
+          <NavLinks setDrawerIsOpen={setDrawerIsOpen} />
         </nav>
       </Drawer>
       <Button

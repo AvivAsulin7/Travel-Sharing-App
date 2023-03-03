@@ -54,7 +54,7 @@ const Auth = () => {
         });
         setIsLoading(false);
         auth.login(data.userId, data.token);
-        setIsActive("home");
+        setIsActive("users");
         navigate("/");
       } catch (error) {
         console.log(error);
@@ -84,7 +84,7 @@ const Auth = () => {
         const { data } = await signUp(newUser);
         setIsLoading(false);
         auth.login(data.userId, data.token);
-        setIsActive("home");
+        setIsActive("users");
         navigate("/");
       } catch (error) {
         console.log(error);

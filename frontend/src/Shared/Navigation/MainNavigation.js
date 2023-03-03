@@ -4,6 +4,7 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import NavLinks from "./NavLinks";
 import SlideDrawer from "./SildeDrawer";
+import { AuthContext } from "../Contexts/AuthContext";
 import colorNavContext from "../Contexts/colorNavContext";
 import icon from "../images/icon.png";
 
@@ -12,6 +13,14 @@ const MainNavigation = () => {
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
   const { setIsActive } = useContext(colorNavContext);
+  const auth = useContext(AuthContext);
+  const changeColorNav = () => {
+    if (auth.isLoggedIn) {
+      setIsActive("users");
+    } else {
+      setIsActive("home");
+    }
+  };
 
   return (
     <>
@@ -25,7 +34,7 @@ const MainNavigation = () => {
             />
             <h1 className="main-navigation__title">
               {" "}
-              <Link to="/" onClick={() => setIsActive("home")}>
+              <Link to="/" onClick={() => changeColorNav()}>
                 Travel App
                 <img src={icon} className="icon"></img>
               </Link>
@@ -36,7 +45,7 @@ const MainNavigation = () => {
             {" "}
             <h1 className="main-navigation__title">
               {" "}
-              <Link to="/" onClick={() => setIsActive("home")}>
+              <Link to="/" onClick={() => changeColorNav()}>
                 Travel App
                 <img src={icon} className="icon"></img>
               </Link>
