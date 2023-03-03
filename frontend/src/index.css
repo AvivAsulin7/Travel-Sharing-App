@@ -5,11 +5,13 @@
 
 html {
   font-family: 'Open Sans', sans-serif;
+
 }
 
 body {
   margin: 0;
-  background: #4d4d4d;
+  background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url("./Shared/images/around-the-world.jpg");
+  background-size:120%;
 }
 
 .slide-in-left-enter {
@@ -38,4 +40,16 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media (max-width: 820px) {
+  body {
+    background-size: 250%;
+  }
+}
+
+@media (max-width: 550px) {
+  body {
+    background-size: 390%;
+  }
 }

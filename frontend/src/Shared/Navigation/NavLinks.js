@@ -16,66 +16,88 @@ const NavLinks = () => {
 
   return (
     <ul className="nav-links">
-      <li>
-        <Link
-          className={isActive === "home" ? "active" : "nav-links a "}
-          to="/"
-          onClick={() => {
-            setIsActive("home");
-          }}
-        >
-          Home
-        </Link>
-      </li>
       {auth.isLoggedIn && (
-        <li>
-          <NavLink
-            className={isActive === "profile" ? "active" : "nav-links a "}
-            to={`/${auth.userId}`}
-            onClick={() => {
-              setIsActive("profile");
-            }}
-          >
-            Profile
-          </NavLink>{" "}
-        </li>
-      )}
-      {auth.isLoggedIn && (
-        <li>
-          <NavLink
-            className={isActive === "new-travel" ? "active" : "nav-links a "}
-            to="/posts/new"
-            onClick={() => {
-              setIsActive("new-travel");
-            }}
-          >
-            Add Travel
-          </NavLink>
-        </li>
+        <>
+          <li>
+            <Link
+              className={isActive === "users" ? "active" : "nav-links a "}
+              to="/"
+              onClick={() => {
+                setIsActive("users");
+              }}
+            >
+              Users
+            </Link>
+          </li>
+          <li>
+            <NavLink
+              className={isActive === "profile" ? "active" : "nav-links a "}
+              to={`/${auth.userId}`}
+              onClick={() => {
+                setIsActive("profile");
+              }}
+            >
+              Profile
+            </NavLink>{" "}
+          </li>
+          <li>
+            <NavLink
+              className={isActive === "new-travel" ? "active" : "nav-links a "}
+              to="/posts/new"
+              onClick={() => {
+                setIsActive("new-travel");
+              }}
+            >
+              Add Travel
+            </NavLink>
+          </li>
+          <li>
+            <button
+              onClick={() => {
+                changePageToHome();
+              }}
+            >
+              Logout
+            </button>
+          </li>
+        </>
       )}
       {!auth.isLoggedIn && (
-        <li>
-          <NavLink
-            className={isActive === "auth" ? "active" : "nav-links a "}
-            to="/auth"
-            onClick={() => {
-              setIsActive("auth");
-            }}
-          >
-            Login/Register
-          </NavLink>
-        </li>
-      )}
-      {auth.isLoggedIn && (
-        <li>
-          <button
-            onClick={() => {
-              changePageToHome();
-            }}
-          >
-            Logout
-          </button>
-        </li>
+        <>
+          <li>
+            <Link
+              className={isActive === "home" ? "active" : "nav-links a "}
+              to="/"
+              onClick={() => {
+                setIsActive("home");
+              }}
+            >
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link
+              className={isActive === "users" ? "active" : "nav-links a "}
+              to="/users"
+              onClick={() => {
+                setIsActive("users");
+              }}
+            >
+              Users
+            </Link>
+          </li>
+          <li>
+            <NavLink
+              className={isActive === "auth" ? "active" : "nav-links a "}
+              to="/auth"
+              onClick={() => {
+                setIsActive("auth");
+              }}
+            >
+              Login/Register
+            </NavLink>
+          </li>
+        </>
       )}
     </ul>
   );

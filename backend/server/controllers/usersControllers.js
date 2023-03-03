@@ -155,5 +155,8 @@ export const getSpecificUser = async (req, res, next) => {
   } catch (error) {
     return next(new HttpError("Getting user failed, please try again.", 500));
   }
+  if (!user) {
+    return next(new HttpError("Getting user failed, please try again.", 500));
+  }
   res.json({ user: user.toObject({ getters: true }) });
 };

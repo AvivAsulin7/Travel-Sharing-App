@@ -1,6 +1,6 @@
 import "./App.css";
 import { useCallback, useState, useEffect } from "react";
-import { Routes, Route, HashRouter } from "react-router-dom";
+import { Routes, Route, HashRouter, BrowserRouter } from "react-router-dom";
 import Users from "./User/pages/Users";
 import NewTravel from "./Posts/pages/NewTravel";
 import MainNavigation from "./Shared/Navigation/MainNavigation";
@@ -10,6 +10,7 @@ import UpdateTravel from "./Posts/pages/UpdateTravel";
 import Auth from "./User/pages/Auth";
 import { AuthContext } from "./Shared/Contexts/AuthContext";
 import colorNavContext from "./Shared/Contexts/colorNavContext";
+import Home from "./User/pages/Home";
 
 function App() {
   const [token, setToken] = useState(false);
@@ -50,7 +51,7 @@ function App() {
         value={{ isLoggedIn: !!token, token, login, logout, userId }}
       >
         <colorNavContext.Provider value={{ isActive, setIsActive }}>
-          <HashRouter>
+          <BrowserRouter>
             <main>
               <MainNavigation />
               <Routes>
@@ -72,7 +73,7 @@ function App() {
                 ></Route>
               </Routes>
             </main>
-          </HashRouter>
+          </BrowserRouter>
         </colorNavContext.Provider>
       </AuthContext.Provider>
     );
@@ -82,11 +83,12 @@ function App() {
         value={{ isLoggedIn: !!token, token, login, logout, userId }}
       >
         <colorNavContext.Provider value={{ isActive, setIsActive }}>
-          <HashRouter>
+          <BrowserRouter>
             <main>
               <MainNavigation />
               <Routes>
-                <Route path="/" element={<Users />}></Route>
+                <Route path="/" element={<Home />}></Route>
+                <Route path="/users" element={<Users />}></Route>
                 <Route
                   path="/:userId"
                   element={
@@ -100,7 +102,7 @@ function App() {
                 <Route path="/auth" element={<Auth />}></Route>
               </Routes>
             </main>
-          </HashRouter>
+          </BrowserRouter>
         </colorNavContext.Provider>
       </AuthContext.Provider>
     );

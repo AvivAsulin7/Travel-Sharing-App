@@ -1,0 +1,65 @@
+.homepage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.box {
+    background-color: #000;
+    color: #fff;
+    opacity: .5;
+    width: 600px;
+    height: 400px;
+    text-align: center;
+    font-family: "Finlandica";
+    border-radius: 15px;
+}
+
+.starter {
+    margin-top: 90px;
+}
+
+.starter h1 {
+    font-size: 2.5rem;
+}
+
+.starter h3 {
+    font-size: 1.3rem;
+}
+
+.starter h1,h3 {
+    margin: 30px;
+}
+
+.btn {
+    font-size: 1.5rem;
+}
+
+@media (max-width: 550px) {
+    .box {
+        width: 300px;
+        height: 280px;
+    }
+
+    .starter {
+        margin-top: 0;
+    }
+
+    .starter h1 {
+        font-size: 1.5rem;
+    }
+    
+    .starter h3 {
+        font-size: 1rem;
+    }
+    
+    .starter h1,h3 {
+        margin: 30px;
+    }
+    
+    .btn {
+        font-size: 0.8rem;
+    }
+
+}
