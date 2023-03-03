@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:5000";
+const url = "https://travel-app-ww2y.onrender.com";
 // "http://localhost:5000"
 
 export const signUp = (user) => axios.post(`${url}/users/signup`, user);
