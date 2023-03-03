@@ -20,6 +20,9 @@
   color: #fff;
   text-decoration: none;
   padding: 0.5rem;
+  background-color: black;
+  opacity: .6;
+  display: block;
 }
 
 
@@ -38,6 +41,8 @@
   padding: 0.5rem;
   font: inherit;
   border: none;
+  background-color: black;
+  opacity: .6;
 }
 
 .nav-links button:focus {
@@ -51,9 +56,10 @@
   border: none;
 }
 
-@media (min-width: 769px) {
+@media (min-width: 900px) {
   .nav-links {
     flex-direction: row;
+    
   }
 
   .nav-links li {
@@ -61,14 +67,17 @@
   }
 
   .nav-links a {
-    color: white;
+    color: #fff;
     text-decoration: none;
+    background-color: transparent;
+    opacity: .9;
   }
 
   .nav-links button {
     color: white;
     background: transparent;
     border: none;
+    opacity: .9;
   }
   
   .nav-links button:hover,
