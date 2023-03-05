@@ -70,7 +70,6 @@ const NewTravel = () => {
       setIsLoading(false);
       setError(true);
       setMessageError(error.response.data.message);
-      console.log(error);
     }
   };
 

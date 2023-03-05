@@ -1,10 +1,12 @@
 import express from "express";
 import { check } from "express-validator";
+import checkAuth from "../middleware/checkAuth.js";
 import {
   signIn,
   signUp,
   getUsers,
   getSpecificUser,
+  deleteUser,
 } from "../controllers/usersControllers.js";
 
 const router = express.Router();
@@ -21,5 +23,9 @@ router.post(
 );
 router.post("/signin", signIn);
 router.get("/:userId", getSpecificUser);
+
+router.use(checkAuth);
+
+router.delete("/delete/:userId", deleteUser);
 
 export default router;

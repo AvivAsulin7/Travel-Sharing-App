@@ -19,7 +19,6 @@ const Users = () => {
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
-        console.log(error);
         setError(true);
         setMessageError(error.response.data.message);
       }

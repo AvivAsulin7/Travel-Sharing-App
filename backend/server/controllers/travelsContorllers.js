@@ -164,7 +164,6 @@ export const deleteTravel = async (req, res, next) => {
   }
 
   try {
-    console.log(deletedTravel);
     const sess = await mongoose.startSession();
     sess.startTransaction();
     await deletedTravel.remove({ session: sess });

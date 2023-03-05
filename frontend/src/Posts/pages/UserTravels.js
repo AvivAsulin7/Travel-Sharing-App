@@ -16,6 +16,7 @@ const UserTravels = () => {
   const [user, setUser] = useState({});
   const [travels, setTravels] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDeletedUser, setIsDeletedUser] = useState(false);
   const { userId } = useParams();
   const { setIsActive } = useContext(colorNavContext);
   const auth = useContext(AuthContext);
@@ -28,7 +29,6 @@ const UserTravels = () => {
         setUser(data.user);
         setIsLoading(false);
       } catch (error) {
-        console.log(error);
         setIsLoading(false);
       }
     };
@@ -38,7 +38,6 @@ const UserTravels = () => {
         setTravels(data.travels);
         setIsLoading(false);
       } catch (error) {
-        console.log(error);
         setIsLoading(false);
       }
     };
@@ -56,9 +55,13 @@ const UserTravels = () => {
     <>
       {isLoading && <LoadingSpinner />}
       <div className="profile-page">
-        <Profile user={user} />
+        <Profile
+          user={user}
+          setIsDeletedUser={setIsDeletedUser}
+          setIsLoading={setIsLoading}
+        />
         <TravelList items={travels} handleDeletedTravel={handleDeletedTravel} />
-        {/* {auth.userId === user.id && travels.length === 0 ? (
+        {auth.userId === user.id && travels.length === 0 && !isDeletedUser && (
           <div className="place-list center">
             <Card>
               <h2>No travels found. Maybe create one?</h2>
@@ -67,12 +70,7 @@ const UserTravels = () => {
               </Link>
             </Card>
           </div>
-        ) : (
-          <TravelList
-            items={travels}
-            handleDeletedTravel={handleDeletedTravel}
-          />
-        )} */}
+        )}
       </div>
     </>
   );

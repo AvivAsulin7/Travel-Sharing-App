@@ -55,7 +55,6 @@ const UpdateTravel = () => {
         );
         setIsLoading(false);
       } catch (error) {
-        console.log(error);
         setIsLoading(false);
         setError(true);
         setMessageError(error.response.data.message);
@@ -77,7 +76,6 @@ const UpdateTravel = () => {
       navigate(`/${auth.userId}`);
     } catch (error) {
       setIsLoading(false);
-      console.log(error);
       setError(true);
       setMessageError(error.response.data.message);
     }

@@ -57,7 +57,6 @@ const Auth = () => {
         setIsActive("users");
         navigate("/");
       } catch (error) {
-        console.log(error);
         setIsLoading(false);
         setError(true);
         setMessageError(error.response.data.message);
@@ -87,7 +86,6 @@ const Auth = () => {
         setIsActive("users");
         navigate("/");
       } catch (error) {
-        console.log(error);
         setIsLoading(false);
         setError(true);
         setMessageError(error.response.data.message);

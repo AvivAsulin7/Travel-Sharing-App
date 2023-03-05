@@ -1,9 +1,11 @@
+import { mongoose } from "mongoose";
 import { validationResult } from "express-validator";
 import { HttpError } from "../models/HttpError.js";
 import { User } from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { Travel } from "../models/Travel.js";
 
 dotenv.config();
 
@@ -159,4 +161,40 @@ export const getSpecificUser = async (req, res, next) => {
     return next(new HttpError("Getting user failed, please try again.", 500));
   }
   res.json({ user: user.toObject({ getters: true }) });
+};
+
+/////////////////////////////////////////
+
+export const deleteUser = async (req, res, next) => {
+  const { userId } = req.params;
+  let user;
+  try {
+    user = await User.findById(userId).populate("travels");
+  } catch (error) {
+    return next(new HttpError("Deleting user failed, please try again.", 500));
+  }
+
+  if (!user) {
+    return next(
+      new HttpError("Deleting user failed, please try again. !", 500)
+    );
+  }
+  if (user.id !== req.userDate.userId) {
+    return next(
+      new HttpError("You have no credetials to delete this acount!", 401)
+    );
+  }
+
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await user.remove({ session: sess });
+    await Travel.deleteMany({ creator: userId }, { session: sess });
+    await sess.commitTransaction();
+  } catch (error) {
+    return next(
+      new HttpError("Something went wrong, could not delete user.", 500)
+    );
+  }
+  res.status(200).json({ message: "Deleted User" });
 };

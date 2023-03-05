@@ -1,12 +1,17 @@
 import axios from "axios";
 
-const url = "https://travel-app-backend-x2bg.onrender.com";
+const url = "http://localhost:5000";
 // "http://localhost:5000"
+// "https://travel-app-backend-x2bg.onrender.com"
 
 export const signUp = (user) => axios.post(`${url}/users/signup`, user);
 export const signIn = (user) => axios.post(`${url}/users/signin`, user);
 export const getUsers = () => axios.get(`${url}/users`);
 export const getUser = (userId) => axios.get(`${url}/users/${userId}`);
+export const deleteUser = (userId, token) =>
+  axios.delete(`${url}/users/delete/${userId}`, {
+    headers: { Authorization: "Bearer " + token },
+  });
 
 ///////////////
 
