@@ -6,10 +6,9 @@ import { deleteUser } from "../../api/api";
 import { AuthContext } from "../../Shared/Contexts/AuthContext";
 import Button from "../../Shared/FormElements/Button";
 import ErrorModal from "../../Shared/ErrorModal";
-import LoadingSpinner from "../../Shared/LoadingSpinner";
 import "./Profile.css";
 
-const Profile = ({ user, setIsDeletedUser, setIsLoading }) => {
+const Profile = ({ user, setIsLoading }) => {
   const navigate = useNavigate();
   const auth = useContext(AuthContext);
   const [error, setError] = useState(false);
@@ -19,7 +18,6 @@ const Profile = ({ user, setIsDeletedUser, setIsLoading }) => {
   const handleCloseConfirm = () => setShowConfirm(false);
   const confirmDelete = async () => {
     setShowConfirm(false);
-    setIsDeletedUser(true);
     setIsLoading(true);
     try {
       const { data } = await deleteUser(user.id, auth.token);
