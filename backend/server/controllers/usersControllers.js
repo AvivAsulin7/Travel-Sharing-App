@@ -96,10 +96,11 @@ export const signIn = async (req, res, next) => {
     return next(HttpError("Invalid inputs , please check your data.", 422));
   const user = req.body;
   const { email, password } = user;
+  const emaill = email.toLowerCase();
 
   let existUser;
   try {
-    existUser = await User.findOne({ email: email });
+    existUser = await User.findOne({ email: emaill });
   } catch (error) {
     return next(new HttpError("Logging in failed , please try again.", 500));
   }

@@ -56,7 +56,7 @@ const UserTravels = () => {
       <div className="profile-page">
         <Profile user={user} setIsLoading={setIsLoading} />
         <TravelList items={travels} handleDeletedTravel={handleDeletedTravel} />
-        {auth.userId === user.id && travels.length === 0 && (
+        {/* {auth.userId === user.id && travels.length === 0 && (
           <div className="place-list center">
             <Card>
               <h2>No travels found. Maybe create one?</h2>
@@ -65,7 +65,7 @@ const UserTravels = () => {
               </Link>
             </Card>
           </div>
-        )}
+        )} */}
       </div>
     </>
   );

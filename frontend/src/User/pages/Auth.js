@@ -70,7 +70,6 @@ const Auth = () => {
           `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_NAME}/image/upload`,
           formData
         );
-
         const newUser = {
           email: formState.inputs.email.value.toLowerCase(),
           name: formState.inputs.name.value,

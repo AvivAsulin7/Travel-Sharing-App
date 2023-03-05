@@ -79,6 +79,7 @@ text-transform: capitalize;
   padding:10%;
   background: white;
   border-radius: 8px;
+  align-items: center;
   text-align: center;
 }
 
@@ -99,16 +100,16 @@ text-transform: capitalize;
   } 
 
   .confirm-container {
-    width: 30%;
-    height: 30%;
+    width: 50%;
+    height: 25%;
     padding: 4%;
-    top: 22vh;
-    left: 35%;
+    top: 25vh;
+    left: 23%;
     
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 550px) {
   .place-item__actions {
    display: flex;
    flex-direction: column;
@@ -119,4 +120,33 @@ text-transform: capitalize;
     width: 10rem;
   }
 
+  .confirm-container {
+    width: 70%;
+    left: 14%;
+    height: 35%;
+  }
+
+  .confirm-container h3 {
+    font-size: 1rem;
+  }
+
+}
+
+@media (min-width: 1225px) {
+
+  .confirm-container {
+    width: 30%;
+    height: 32%;
+    padding: 3%;
+    top: 22vh;
+    left: 35%;
+    
+  }
+}
+
+@media (min-width: 1800px) {
+
+  .confirm-container {
+    height: 25%;
+  }
 }
