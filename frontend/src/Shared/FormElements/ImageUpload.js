@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 
 import Button from "./Button";
+import Input from "./Input";
 import "./ImageUpload.css";
 
 const ImageUpload = (props) => {
@@ -10,6 +11,7 @@ const ImageUpload = (props) => {
   const imageUploadRef = useRef();
 
   useEffect(() => {
+    if (props.InitialValue) setPreviewUrl(props.InitialValue);
     if (!image) {
       return;
     }

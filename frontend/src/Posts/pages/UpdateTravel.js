@@ -4,12 +4,14 @@ import Button from "../../Shared/FormElements/Button";
 import Input from "../../Shared/FormElements/Input";
 import LoadingSpinner from "../../Shared/LoadingSpinner";
 import ErrorModal from "../../Shared/ErrorModal";
+import ImageUpload from "../../Shared/FormElements/ImageUpload";
 import { VALIDATOR_MINLENGTH } from "../../Shared/util/validators";
 import { useForm } from "../../Shared/Hooks/FormHook";
 import "./NewTravel.css";
 import { getTravelById } from "../../api/api";
 import { updateDetailsOfTravel } from "../../api/api";
 import { AuthContext } from "../../Shared/Contexts/AuthContext";
+import axios from "axios";
 
 const UpdateTravel = () => {
   const auth = useContext(AuthContext);
@@ -27,6 +29,10 @@ const UpdateTravel = () => {
       },
       description: {
         value: "",
+        isValid: false,
+      },
+      image: {
+        value: null,
         isValid: false,
       },
     },
@@ -50,6 +56,10 @@ const UpdateTravel = () => {
               value: data.travel.description,
               isValid: true,
             },
+            image: {
+              value: data.travel.image,
+              isValid: true,
+            },
           },
           true
         );
@@ -66,11 +76,21 @@ const UpdateTravel = () => {
   const travelUpdateSumbit = async (event) => {
     setIsLoading(true);
     event.preventDefault();
-    const details = {
-      header: formState.inputs.header.value,
-      description: formState.inputs.description.value,
-    };
+
     try {
+      const formData = new FormData();
+      formData.append("file", formState.inputs.image.value);
+      formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESETS);
+      const response = await axios.post(
+        `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_NAME}/image/upload`,
+        formData
+      );
+      const details = {
+        header: formState.inputs.header.value,
+        description: formState.inputs.description.value,
+        image: response.data.secure_url,
+      };
+
       const { data } = await updateDetailsOfTravel(postId, details, auth.token);
       setIsLoading(false);
       navigate(`/${auth.userId}`);
@@ -105,9 +125,9 @@ const UpdateTravel = () => {
           id="header"
           element="input"
           type="text"
-          label="Title"
+          label="Site"
           validators={[VALIDATOR_MINLENGTH(5)]}
-          errorText="Please enterr a valid Title (min 5 characters)."
+          errorText="Please enterr a valid Site (min 5 characters)."
           onInput={inputHandle}
           InitialValue={formState.inputs.header.value}
           InitialIsValid={formState.inputs.header.isValid}
@@ -121,6 +141,12 @@ const UpdateTravel = () => {
           onInput={inputHandle}
           InitialValue={formState.inputs.description.value}
           InitialIsValid={formState.inputs.description.isValid}
+        />
+        <ImageUpload
+          id="image"
+          onInput={inputHandle}
+          errorText="Please enter an image"
+          InitialValue={formState.inputs.image.value}
         />
         <Button type="sumbit" disabled={!formState.isValid}>
           Update Travel

@@ -83,20 +83,20 @@ const NewTravel = () => {
         id="title"
         element="input"
         type="text"
-        label="Location"
-        placeholder="Location"
+        label="City"
+        placeholder="City"
         validators={[VALIDATOR_REQUIRE()]}
-        errorText="Please enter a valid Location"
+        errorText="Please enter a valid City"
         onInput={inputHandle}
       />
       <Input
         id="header"
         element="input"
         type="text"
-        label="Title"
-        placeholder="Title"
-        validators={[VALIDATOR_MINLENGTH(5)]}
-        errorText="Please enter a valid Tile (at least 5 characters)."
+        label="Site"
+        placeholder="Site"
+        validators={[VALIDATOR_MINLENGTH(3)]}
+        errorText="Please enter a valid Site (at least 3 characters)."
         onInput={inputHandle}
       />
       <Input

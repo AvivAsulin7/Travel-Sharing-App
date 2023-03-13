@@ -58,7 +58,7 @@ export const createTravel = async (req, res, next) => {
 
   let coordinates;
   try {
-    coordinates = await getCoordinates(title);
+    coordinates = await getCoordinates(header);
   } catch (error) {
     return next(error);
   }
@@ -111,8 +111,15 @@ export const updateTravel = async (req, res, next) => {
       HttpError("Invalid inputs passed, please check your data.", 422)
     );
 
-  const { header, description } = req.body;
+  const { header, description, image } = req.body;
   const travelId = req.params.pid;
+
+  let coordinates;
+  try {
+    coordinates = await getCoordinates(header);
+  } catch (error) {
+    return next(error);
+  }
 
   let travel;
   try {
@@ -129,6 +136,8 @@ export const updateTravel = async (req, res, next) => {
 
   travel.header = header;
   travel.description = description;
+  travel.location = coordinates;
+  travel.image = image;
 
   try {
     await travel.save();
